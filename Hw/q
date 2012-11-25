@@ -1,0 +1,106 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=GB_2312-80">
+<title>~/SparkleShare/Ve281/HW/hw2.html</title>
+<meta name="Generator" content="Vim/7.3">
+<meta name="plugin-version" content="vim7.3_v6">
+<meta name="syntax" content="none">
+<meta name="settings" content="use_css">
+<style type="text/css">
+<!--
+pre { font-family: monospace; color: #000000; background-color: #ffffff; }
+body { font-family: monospace; color: #000000; background-color: #ffffff; }
+-->
+</style>
+</head>
+<body>
+<pre>
+1.
+(a)
+void LinkedList::removeNode(node *n) {
+    if (first == n) {
+        first = NULL;
+        return;
+    }
+    node *curr = first;
+    while (curr-&gt;next != n)
+        curr = curr-&gt;next;
+    curr-&gt;next = n-&gt;next;
+    delete n;
+}
+
+(b)
+void Dlist::removeNode(node *n) {
+    if (n == first) {
+        first = n-&gt;next;
+        n-&gt;next-&gt;prev = NULL;
+    }
+    else if (n == last) {
+        last = n-&gt;prev;
+        n-&gt;prev-&gt;next = NULL;
+    }
+    else {
+        n-&gt;prev-&gt;next = n-&gt;next;
+        n-&gt;next-&gt;prev = n-&gt;prev;
+    }
+    delete n;
+}
+
+(c)
+void Clist::removeNode(node *n) {
+    node *victim = n-&gt;next;
+    n-&gt;value = victim-&gt;value;
+    n-&gt;next = victim-&gt;next;
+    delete victim;
+}
+
+2.
+(a)
+int removeKey(int a[], unsigned int size, int key) {
+    for (int i = 0; i != size; ++i) {
+        if (a[i] == key) {
+            for (int j = i; j != size-1; ++j) {
+                a[j] = a[j+1];
+            }
+            size--;
+        }
+    }
+    return size;
+}
+
+(b)
+void LinkedList::removeKey(int key) {
+    if (first) return;
+    node *curr = first;
+    node *victim = NULL;
+    while (curr-&gt;next) {
+        if(curr-&gt;next-&gt;value == key) {
+            victim = curr-&gt;next;
+            curr-&gt;next = victim-&gt;next;
+            delete victim;
+        }
+    }
+}
+
+3.
+class LinkedList {
+public:
+    ...
+    const node* const getHead(const LinkedList&amp; l);
+private:
+    node *first;
+}
+
+void recursion(node *first) {
+    if (!first) return;
+    if (!first-&gt;next) recursion(first-&gt;next);
+    cout &lt;&lt; head-&gt;value &lt;&lt; ' ';
+}
+
+ostream&amp; opeartor&lt;&lt;(ostream&amp; os, const LinkedList&amp; l) {
+    recursion(getHead(l));
+}
+</pre>
+</body>
+</html>

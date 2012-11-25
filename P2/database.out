@@ -1,0 +1,83 @@
+insert 20 100 ATown
+Insertion successful
+insert 30 200 BTown
+Insertion successful
+insert 35 50 CTown
+Insertion successful
+insert 15 150 DTown
+Insertion successful
+insert 40 225 ETown
+Insertion successful
+insert 50 180 FTown
+Insertion successful
+insert 45 170 GTown
+Insertion successful
+insert 50 300 HTown
+Insertion failed
+insert 10 170 HTown
+Insertion failed
+insert 10 300 GTown
+Insertion failed
+list 1
+    15 150 DTown
+    20 100 ATown
+30 200 BTown
+    35 50 CTown
+40 225 ETown
+    45 170 GTown
+    50 180 FTown
+list 2
+        35 50 CTown
+    20 100 ATown
+        15 150 DTown
+45 170 GTown
+        50 180 FTown
+    30 200 BTown
+        40 225 ETown
+list 3
+        20 100 ATown
+    30 200 BTown
+        35 50 CTown
+15 150 DTown
+        40 225 ETown
+    50 180 FTown
+        45 170 GTown
+search 1 40
+Record found: 40 225 ETown
+search 1 60
+No record found
+search 2 150
+Record found: 15 150 DTown
+search 2 120
+No record found
+search 3 BTown
+Record found: 30 200 BTown
+search 3 HTown
+No record found
+remove 1 35
+Remove record: 35 50 CTown
+remove 1 55
+Removal failed
+remove 2 99
+Removal failed
+remove 2 170
+Remove record: 45 170 GTown
+remove 3 HTown
+Removal failed
+remove 3 BTown
+Remove record: 30 200 BTown
+list 1
+    15 150 DTown
+    20 100 ATown
+40 225 ETown
+    50 180 FTown
+list 2
+    20 100 ATown
+15 150 DTown
+    50 180 FTown
+    40 225 ETown
+list 3
+    20 100 ATown
+15 150 DTown
+    40 225 ETown
+    50 180 FTown
