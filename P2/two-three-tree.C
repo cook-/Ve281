@@ -112,4 +112,9 @@ static split(Node<Key, Val> *&node, Key key, Val val, Node<Key, Val> *root) {
     
 }
 
+template <class Key, class Val>
+static Node<Key, Val>* search_parent(Node<Key, Val> *node, Node<Key, Val> *root) {
+    if 
+}
+
 #endif /* TWO_THREE_TREE_C */
