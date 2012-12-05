@@ -80,6 +80,8 @@ static bool insert_help(Node<Key, Val>* pNode, Key *&key, Val *&val,
             if (pNode->rkey == NULL) {  // *pNode is a 2-node
                 pNode->rkey = pNode->lkey;
                 pNode->rval = pNode->lval;
+                pNode->lkey = key;
+                pNode->lval = val;
                 pNode->right = pNode->center;
                 pNode->center = pN2;
                 pNode->left = pN1;
@@ -253,15 +255,13 @@ static bool insert_help(Node<Key, Val>* pNode, Key *&key, Val *&val,
 
 template <class Key, class Val>
 Val* Tree<Key, Val>::remove(Key key) {
-    Val* result = NULL;
     if (remove_help(root, key)) {
         Node<Key, Val>* victim = root;
         root = root->left;
         victim->left = NULL;
-        result = victim->lval;
         delete victim;
     }
-    return result;
+    return search(key);
 }
 
 template <class Key, class Val>
