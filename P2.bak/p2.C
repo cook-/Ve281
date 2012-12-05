@@ -10,26 +10,34 @@
 using namespace std;
 
 struct Record {
-    int population;
-    int economy;
-    string name;
+    int *pPopulation;
+    int *pEconomy;
+    string *pName;
     friend ostream& operator<<(ostream&, Record);
+/*    Record() {
+        pPopulation = NULL;
+        pEconomy = NULL;
+        pName = NULL;
+    }
+    ~Record() {
+        delete pPopulation;
+        delete pEconomy;
+        delete pName;
+    }*/
 };
 
 ostream& operator<<(ostream& os, Record record) {
-    os << record.population << " "
-       << record.economy << " "
-       << record.name;
+    os << *(record.pPopulation) << " "
+       << *(record.pEconomy) << " "
+       << *(record.pName);
     return os;
 }
 
 int main()
 {
-    Record database[1024];
     Tree<int, Record> pTree;
     Tree<int, Record> eTree;
     Tree<string, Record> nTree;
-    int i = 0;
 
     while (cin) {
         string op;
@@ -48,16 +56,18 @@ int main()
               eTree.search(economy) == NULL &&
               nTree.search(name) == NULL) {
                 
-                Record *pRecord = database + i;
-                pRecord->population = population;
-                pRecord->economy = economy;
-                pRecord->name = name;
+                int *pPopulation = new int(population);
+                int *pEconomy = new int(economy);
+                string *pName = new string(name);
+                Record *pRecord = new Record;
+                pRecord->pPopulation = pPopulation;
+                pRecord->pEconomy = pEconomy;
+                pRecord->pName = pName;
 
-                pTree.insert(&(pRecord->population), pRecord);
-                eTree.insert(&(pRecord->economy), pRecord);
-                nTree.insert(&(pRecord->name), pRecord);
+                pTree.insert(pPopulation, pRecord);
+                eTree.insert(pEconomy, pRecord);
+                nTree.insert(pName, pRecord);
                 cout << "Insertion successful" << endl;
-                i++;
             }
             else
                 cout << "Insertion failed" << endl;
@@ -89,9 +99,9 @@ int main()
 
             if (pRecord != NULL)
                 cout << "Record found: "
-                     << pRecord->population << " "
-                     << pRecord->economy << " "
-                     << pRecord->name << endl;
+                     << *(pRecord->pPopulation) << " "
+                     << *(pRecord->pEconomy) << " "
+                     << *(pRecord->pName) << endl;
             else
                 cout << "No record found" << endl;
 
@@ -106,28 +116,34 @@ int main()
                 cin >> population;
                 cout << "remove " << field << " " << population << endl;
                 pRecord = pTree.search(population);
+                if (pRecord != NULL)
+                    cout << "\n" << *(pRecord->pPopulation) << "\n" << endl;
             }
             if (field == 2) {
                 int economy;
                 cin >> economy;
                 cout << "remove " << field << " " << economy << endl;
                 pRecord = eTree.search(economy);
+                if (pRecord != NULL)
+                    cout << "\n" << *(pRecord->pEconomy) << "\n" << endl;
             }
             if (field == 3) {
                 string name;
                 cin >> name;
                 cout << "remove " << field << " " << name << endl;
                 pRecord = nTree.search(name);
+                if (pRecord != NULL)
+                    cout << "\n" << *(pRecord->pName) << "\n" << endl;
             }
 
             if (pRecord != NULL) {
-                pTree.remove(pRecord->population);
-                eTree.remove(pRecord->economy);
-                nTree.remove(pRecord->name);
+                pTree.remove(*(pRecord->pPopulation));
+                eTree.remove(*(pRecord->pEconomy));
+                nTree.remove(*(pRecord->pName));
                 cout << "Remove record: "
-                     << pRecord->population << " "
-                     << pRecord->economy << " "
-                     << pRecord->name << endl;
+                     << *(pRecord->pPopulation) << " "
+                     << *(pRecord->pEconomy) << " "
+                     << *(pRecord->pName) << endl;
             }
             else
                 cout << "Removal failed" << endl;
@@ -145,6 +161,5 @@ int main()
                 nTree.inOrderPrint(cout);
         }
     }
-
     return 0;
 }

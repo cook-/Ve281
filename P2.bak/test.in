@@ -1,0 +1,19 @@
+insert 20 100 ATown
+insert 30 200 BTown
+insert 35 50  CTown
+insert 15 150 DTown
+insert 40 225 ETown
+insert 50 180 FTown
+insert 45 170 GTown
+insert 50 300 HTown
+insert 10 170 HTown
+insert 10 300 GTown
+list 1
+remove 1 35
+list 1
+remove 2 170
+list 1
+remove 3 HTown
+list 1
+remove 3 BTown
+list 1

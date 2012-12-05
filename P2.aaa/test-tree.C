@@ -5,10 +5,9 @@ using namespace std;
 
 int main(int argc, char *argv[])
 {
-    const int size = 7;
-    int key[size] = { 20, 30, 35, 15, 40, 50, 45 };
-//    int key[size] = { 100, 200, 50, 150, 225, 180, 170, 300, 170, 300 };
-//    char key[size] = { 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H','H', 'G' };
+    const int size = 11;
+    int key[size] = {10, 30, 40, 20, 65, 80, 60, 50, 90, 100, 70};
+
     int val[size];
     int i;
     for(i = 0; i < size; i++)
@@ -23,18 +22,21 @@ int main(int argc, char *argv[])
     cout << "Tree after multiple insertions" << endl;
     tree.inOrderPrint(cout);
 
-    tree.remove(35);
-    cout << "Tree after removing 35" << endl;
+    tree.remove(65);
+    cout << "Tree after removing 65" << endl;
     tree.inOrderPrint(cout);
 
-    tree.remove(45);
-    cout << "Tree after removing 45" << endl;
+    tree.remove(70);
+    cout << "Tree after removing 70" << endl;
     tree.inOrderPrint(cout);
 
-    tree.remove(30);
-    cout << "Tree after removing 30" << endl;
+    tree.remove(90);
+    cout << "Tree after removing 90" << endl;
     tree.inOrderPrint(cout);
 
+    tree.remove(100);
+    cout << "Tree after removing 100" << endl;
+    tree.inOrderPrint(cout);
 
     return 0;
 }

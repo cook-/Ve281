@@ -55,29 +55,19 @@ Record found: 30 200 BTown
 search 3 HTown
 No record found
 remove 1 35
-Remove record: 35 50 CTown
+Removal failed
 remove 1 55
 Removal failed
 remove 2 99
 Removal failed
 remove 2 170
+
+170
+
 Remove record: 45 170 GTown
 remove 3 HTown
 Removal failed
 remove 3 BTown
-Remove record: 30 200 BTown
-list 1
-    15 150 DTown
-    20 100 ATown
-40 225 ETown
-    50 180 FTown
-list 2
-    20 100 ATown
-15 150 DTown
-    50 180 FTown
-    40 225 ETown
-list 3
-    20 100 ATown
-15 150 DTown
-    40 225 ETown
-    50 180 FTown
+
+BTown
+
