@@ -19,11 +19,21 @@ class Node {
 public:
     Node();
     Node(int ind);
+    int getIndex();
+    vector<Edge*>& getOutEdgeVector();
+    vector<Edge*>& getInEdgeVector();
+    void addOutEdge(Edge* ep);
+    void addInEdge(Edge* ep);
+    bool isExplored();
+    void markAsExplored();
+    int getDistance();
+    void setDistance(int dist);
+    Node* getPrevNode();
+    void setPrevNode(Node* np);
 
     friend class Edge;
     friend class Graph;
     friend ostream& operator<<(ostream &os, const Node &v);
-    //
 };
 
 #endif /* __NODE_H__ */

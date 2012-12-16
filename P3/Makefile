@@ -2,7 +2,7 @@
 
 CC = g++
 MAINSRCS = p3.C
-OTHSRCS = 
+OTHSRCS = node.C edge.C graph.C 
 TEMPLATESRCS = 
 HEADERS = node.h edge.h graph.h
 SRCS = $(MAINSRCS) $(OTHSRCS)

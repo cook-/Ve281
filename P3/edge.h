@@ -16,10 +16,13 @@ class Edge {
 public:
     Edge();
     Edge(Node *s, Node *d, int w);
+    Node* getStart();
+    Node* getEnd();
+    int getWeight();
 
     friend class Node;
     friend class Graph;
-    friend ostream& operator<<(ostream *os, const Edge &e);
+    friend ostream& operator<<(ostream &os, const Edge &e);
     //
 };
 

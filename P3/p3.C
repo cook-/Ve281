@@ -1,0 +1,140 @@
+#include "node.h"
+#include "edge.h"
+#include "graph.h"
+#include <iostream>
+#include <vector>
+#include <deque>
+#include <cassert>
+
+using namespace std;
+
+bool findShortestPath(Graph &graph, int srcIndex, int destIndex)
+{
+    deque<Node*> checkList;
+
+    Node* src = graph.getNode(srcIndex);
+    src->setDistance(0);
+    checkList.push_back(src);
+
+    while (!checkList.empty()) {
+        Node* curNode = checkList.front();
+        checkList.pop_front();
+        vector<Edge*> outEdges = curNode->getOutEdgeVector();
+
+        // check all adjacent nodes of curNode
+        for (vector<Edge*>::const_iterator iter = outEdges.begin();
+                                           iter != outEdges.end(); ++iter) {
+            Edge* outEdge = *iter;
+            Node* adjNode = outEdge->getEnd();
+
+            // if adjNode is not marked, then add it to the check list
+            if (!adjNode->isExplored())
+                checkList.push_back(adjNode);
+
+            // update distance of adjNode
+            int curDistance = adjNode->getDistance();
+            int newDistance = curNode->getDistance() + outEdge->getWeight();
+
+            if (-1 == curDistance || newDistance < curDistance) {
+                adjNode->setDistance(newDistance);
+                adjNode->setPrevNode(curNode);
+            }
+        }
+
+        // mark curNode
+        curNode->markAsExplored();
+    }
+
+    Node* dest = graph.getNode(destIndex);
+
+    return NULL != dest->getPrevNode();
+}
+
+void printPath(Node* dest)
+{
+    if (NULL != dest->getPrevNode()) {
+
+        deque<int> stack;
+        cout << "Shortest path length is " << dest->getDistance() << endl;
+
+        while (NULL != dest->getPrevNode()) {
+            stack.push_back(dest->getIndex());
+            dest = dest->getPrevNode();
+        }
+        stack.push_back(dest->getIndex());
+
+        cout << "Shortest path is ";
+
+        while (!stack.empty()) {
+            cout << stack.back() << " ";
+            stack.pop_back();
+        }
+        cout << endl;
+    }
+    
+    else
+        cout << "No path exists!" << endl;
+}
+
+int main()
+{
+    // read graph from file
+    Graph graph;
+
+    int totNum;
+    cin >> totNum;
+    for (int i = 0; i != totNum; ++i) {
+        Node *np = new Node(i);
+        graph.addNode(np);
+    }
+
+    assert(totNum == graph.getNodeVectorSize());
+
+    int srcIndex;
+    cin >> srcIndex;
+    graph.setSrc(srcIndex);
+
+    int destIndex;
+    cin >> destIndex;
+    graph.setDest(destIndex);
+
+    int startIndex;
+    int endIndex;
+    int weight;
+    while (cin >> startIndex >> endIndex >> weight) {
+        //cout << startIndex << " " << endIndex << " " << weight << endl;
+
+        Edge *ep = new Edge(graph.getNode(startIndex),
+                            graph.getNode(endIndex),
+                            weight);
+        graph.addEdge(ep);
+        graph.getNode(startIndex)->addOutEdge(ep);
+        graph.getNode(endIndex)->addInEdge(ep);
+    }
+
+    // find path
+    findShortestPath(graph, srcIndex, destIndex);
+    printPath(graph.getDest());
+
+    //check if a DAG
+    bool isDAG = true;
+
+    for (int i = 0; i != graph.getNodeVectorSize(); ++i) {
+        Node* src = graph.getNode(i);
+        vector<Edge*> inEdges = src->getInEdgeVector();
+        for (vector<Edge*>::const_iterator iter = inEdges.begin();
+                                           iter != inEdges.end(); ++iter) {
+            destIndex = (*iter)->getStart()->getIndex();
+            isDAG = isDAG && !findShortestPath(graph, i, destIndex);
+            graph.reInitialize();
+            //cout << i << "->" << destIndex << ": " << findShortestPath(graph, i, destIndex) << endl;
+        }
+    }
+
+    if (isDAG)
+        cout << "The graph is a DAG" << endl;
+    else
+        cout << "The graph is not a DAG" << endl;
+
+    return 0;
+}
